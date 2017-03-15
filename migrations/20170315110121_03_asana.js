@@ -3,6 +3,7 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.text('name').notNullable();
     table.text('description').notNullable();
+    table.text('time');
     table.text('imageURL');
     table.text('audioURL');
     table.text('firstTarget');
