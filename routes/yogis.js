@@ -3,13 +3,20 @@ var router = express.Router();
 var knex = require('../db/knex');
 const objection = require('objection');
 
+
 router.get('/', (req, res, next) => {
   return knex('yogi')
       .then(data => {
-        var result = {
-          yogis: data
-        };
-        res.json(result);
+        return Promise.all(data.map(yogi => {
+          return knex('sequence').where('yogiID', yogi.id).pluck('id')
+            .then(sequences => {
+              yogi.sequences = sequences;
+              return yogi;
+            });
+        }))
+      })
+      .then(yogis => {
+        res.json({yogis: yogis});
       });
 });
 
