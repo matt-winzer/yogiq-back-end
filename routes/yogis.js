@@ -20,8 +20,16 @@ router.get('/:id', (req, res, next) => {
       return knex('sequence').where('yogiID', id).pluck('id')
         .then(sequences => {
           var result = {
-            yogi: data,
-            sequences: sequences
+            yogi: {
+              id: data.id,
+              username: data.username,
+              email: data.email,
+              password: data.password,
+              bio: data.bio,
+              profilePic: data.profilePic,
+              dateCreated: data.dateCreated,
+              sequences: sequences
+            }
           };
           res.json(result);
         });
