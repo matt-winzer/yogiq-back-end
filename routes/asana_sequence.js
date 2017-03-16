@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var knex = require('../db/knex');
+const objection = require('objection');
 
 router.get('/', (req, res, next) => {
   return knex('asana_sequence')

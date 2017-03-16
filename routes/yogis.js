@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var knex = require('../db/knex');
+const objection = require('objection');
 
 router.get('/', (req, res, next) => {
   return knex('yogi')
@@ -15,12 +16,16 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
   let id = req.params.id;
   return knex('yogi').where('id', id).first()
-      .then(data => {
-        var result = {
-          yogi: data
-        };
-        res.json(result);
-      });
+    .then(data => {
+      return knex('sequence').where('yogiID', id).pluck('id')
+        .then(sequences => {
+          var result = {
+            yogi: data,
+            sequences: sequences
+          };
+          res.json(result);
+        });
+    });
 });
 
 module.exports = router;
