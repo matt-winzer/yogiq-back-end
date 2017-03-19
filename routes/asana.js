@@ -22,20 +22,22 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   let id = req.params.id;
-  return knex('yogi').where('id', id).first()
+  return knex('asana').where('id', id).first()
     .then(data => {
-      return knex('sequence').where('yogiID', id).pluck('id')
-        .then(sequences => {
+      return knex('asana_sequence').where('asanaID', id).pluck('id')
+        .then(asanaSequences => {
           var result = {
-            yogi: {
+            asana: {
               id: data.id,
-              username: data.username,
-              email: data.email,
-              password: data.password,
-              bio: data.bio,
-              profilePic: data.profilePic,
-              dateCreated: data.dateCreated,
-              sequences: sequences
+              name: data.name,
+              description: data.description,
+              time: data.time,
+              imageURL: data.imageURL,
+              audioURL: data.audioURL,
+              firstTarget: data.firstTarget,
+              secondTarget: data.secondTarget,
+              thirdTarget: data.thirdTarget,
+              asanaSequences: asanaSequences
             }
           };
           res.json(result);
