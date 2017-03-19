@@ -8,9 +8,11 @@ var cors = require('cors');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var yogis = require('./routes/yogis');
-var sequence = require('./routes/sequence')
-var asanaSequence = require('./routes/asana_sequence')
+
+const yogis = require('./routes/yogis');
+const sequence = require('./routes/sequence')
+const asanaSequence = require('./routes/asana_sequence')
+const asana = require ('./routes/asana')
 
 var app = express();
 
@@ -30,8 +32,9 @@ app.use(cors());
 app.use('/api', index);
 app.use('/users', users);
 app.use('/api/yogis', yogis);
-// app.use('/api/sequences', asanaSequence);
+// app.use('/api/asanasequences', asanaSequence);
 app.use('/api/sequences', sequence);
+app.use('/api/asana', asana);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
