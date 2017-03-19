@@ -31,10 +31,11 @@ app.use(cors());
 
 app.use('/api', index);
 app.use('/users', users);
+
 app.use('/api/yogis', yogis);
-// app.use('/api/asanasequences', asanaSequence);
+app.use('/api/asanasequences', asanaSequence);
 app.use('/api/sequences', sequence);
-app.use('/api/asana', asana);
+app.use('/api/asanas', asana);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

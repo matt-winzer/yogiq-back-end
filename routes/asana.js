@@ -7,16 +7,16 @@ const objection = require('objection');
 router.get('/', (req, res, next) => {
   return knex('asana')
       .then(data => {
-        return Promise.all(data.map(yogi => {
-          return knex('sequence').where('yogiID', yogi.id).pluck('id')
-            .then(sequences => {
-              yogi.sequences = sequences;
-              return yogi;
+        return Promise.all(data.map(asana => {
+          return knex('asana_sequence').where('asanaID', asana.id).pluck('id')
+            .then(asanaSequences => {
+              asana.asanaSequences = asanaSequences;
+              return asana;
             });
         }))
       })
-      .then(yogis => {
-        res.json({yogis: yogis});
+      .then(asanas => {
+        res.json({asanas: asanas});
       });
 });
 

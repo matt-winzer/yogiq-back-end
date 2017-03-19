@@ -7,7 +7,7 @@ router.get('/', (req, res, next) => {
   return knex('asana_sequence')
       .then(data => {
         var result = {
-          sequences: data
+          asanaSequences: data
         };
         res.json(result);
       });
@@ -18,7 +18,7 @@ router.get('/:id', (req, res, next) => {
   return knex('asana_sequence').where('sequenceID', id)
       .then(data => {
         var result = {
-          sequence: data
+          asanaSequence: data
         };
         res.json(result);
       });
