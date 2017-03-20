@@ -45,4 +45,22 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
+router.post('/', (req, res, next) => {
+  let data = req.body;
+  return knex('asana').insert({
+    name: data.name,
+    description: data.description,
+    time: data.time,
+    imageURL: data.imageURL,
+    audioURL: data.audioURL,
+    firstTarget: data.firstTarget,
+    secondTarget: data.secondTarget,
+    thirdTarget: data.thirdTarget
+  })
+    .returning('*')
+    .then(asana => {
+      res.json(asana);
+    });
+});
+
 module.exports = router;
