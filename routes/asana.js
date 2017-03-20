@@ -73,4 +73,12 @@ router.patch('/:id', (req, res, next) => {
     });
 });
 
+router.delete('/:id', (req, res, next) => {
+  let id = req.params.id;
+  return knex('asana').where('id', id).del()
+    .then(asana => {
+      res.json(asana);
+    });
+});
+
 module.exports = router;
