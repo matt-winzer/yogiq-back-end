@@ -63,4 +63,14 @@ router.post('/', (req, res, next) => {
     });
 });
 
+router.patch('/:id', (req, res, next) => {
+  let id = req.params.id;
+  let data = req.body;
+  return knex('asana').where('id', id).update(data)
+    .returning('*')
+    .then(asana => {
+      res.json(asana);
+    });
+});
+
 module.exports = router;
