@@ -45,4 +45,40 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
+router.post('/', (req, res, next) => {
+  let data = req.body;
+  return knex('asana').insert({
+    name: data.name,
+    description: data.description,
+    time: data.time,
+    imageURL: data.imageURL,
+    audioURL: data.audioURL,
+    firstTarget: data.firstTarget,
+    secondTarget: data.secondTarget,
+    thirdTarget: data.thirdTarget
+  })
+    .returning('*')
+    .then(asana => {
+      res.json(asana);
+    });
+});
+
+router.patch('/:id', (req, res, next) => {
+  let id = req.params.id;
+  let data = req.body;
+  return knex('asana').where('id', id).update(data)
+    .returning('*')
+    .then(asana => {
+      res.json(asana);
+    });
+});
+
+router.delete('/:id', (req, res, next) => {
+  let id = req.params.id;
+  return knex('asana').where('id', id).del()
+    .then(asana => {
+      res.json(asana);
+    });
+});
+
 module.exports = router;
