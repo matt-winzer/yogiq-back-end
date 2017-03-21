@@ -3,21 +3,20 @@ var router = express.Router();
 var knex = require('../db/knex');
 const objection = require('objection');
 
-
 router.get('/', (req, res, next) => {
   return knex('asana')
-      .then(data => {
-        return Promise.all(data.map(asana => {
-          return knex('asana_sequence').where('asanaID', asana.id).pluck('id')
-            .then(asanaSequences => {
-              asana.asanaSequences = asanaSequences;
-              return asana;
-            });
-        }))
-      })
-      .then(asanas => {
-        res.json({asanas: asanas});
-      });
+    .then(data => {
+      return Promise.all(data.map(asana => {
+        return knex('asana_sequence').where('asanaID', asana.id).pluck('id')
+          .then(asanasequences => {
+            asana.asanasequences = asanasequences;
+            return asana;
+          });
+      }));
+    })
+    .then(asanas => {
+      res.json({asanas: asanas});
+    });
 });
 
 router.get('/:id', (req, res, next) => {
@@ -25,7 +24,7 @@ router.get('/:id', (req, res, next) => {
   return knex('asana').where('id', id).first()
     .then(data => {
       return knex('asana_sequence').where('asanaID', id).pluck('id')
-        .then(asanaSequences => {
+        .then(asanasequences => {
           var result = {
             asana: {
               id: data.id,
@@ -37,7 +36,7 @@ router.get('/:id', (req, res, next) => {
               firstTarget: data.firstTarget,
               secondTarget: data.secondTarget,
               thirdTarget: data.thirdTarget,
-              asanaSequences: asanaSequences
+              asanasequences: asanasequences
             }
           };
           res.json(result);
