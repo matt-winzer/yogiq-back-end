@@ -35,14 +35,15 @@ router.get('/:id', (req, res, next) => {
       });
 });
 
-// router.get('?filter[sequenceID]=', (req, res, next) => {
-//   return knex('asana_sequence')
-//       .then(data => {
-//         var result = {
-//           asanasequences: data
-//         };
-//         res.json(result);
-//       });
-// });
+router.put('/:id', (req, res, next) => {
+  console.log(req.body.asanasequence);
+  let id = req.params.id;
+  let data = req.body.asanasequence;
+  return knex('asana_sequence').where('id', id).update(data)
+    .returning('*')
+    .then(asanasequence => {
+      res.json({asanasequence: asanasequence});
+    });
+});
 
 module.exports = router;
