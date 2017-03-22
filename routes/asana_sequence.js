@@ -8,7 +8,10 @@ router.get('/', (req, res, next) => {
     let sequence = req.query.filter.sequence;
     return knex('asana_sequence').where('sequenceID', sequence)
       .then(data => {
-        res.json(data);
+        var result = {
+          asanasequences: data
+        };
+        res.json(result);
       });
   } else {
     return knex('asana_sequence')
