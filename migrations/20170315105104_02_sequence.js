@@ -2,6 +2,7 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('sequence', (table) => {
     table.increments();
     table.integer('yogiID').references('yogi.id').unsigned().onDelete('cascade');
+    table.text('name');
   });
 };
 
