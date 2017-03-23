@@ -20,8 +20,8 @@ exports.seed = function(knex, Promise) {
         name: 'Open the Hips'
       }, {
         id: 5,
-        yogiID: 1,
-        name: 'Morning Warmup'
+        yogiID: 2,
+        name: 'Pure Relaxation'
       }];
       return knex('sequence').insert(sequences);
     });
